@@ -1,0 +1,21 @@
+.paypalButton , .flutterwareButton{
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.paypalButton:hover , .flutterwareButton:hover{
+    /* background-color: #007bff;
+    color: #fff; */
+
+    opacity: 0.8;
+}
+
+
+
+.card{
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
