@@ -3,7 +3,8 @@ import Header from './Header'
 import CardContainer from './CardContainer'
 
 import api from '../../api'
-import PlaceHolderContainer from '../ui/placeHolderContainer'
+import PlaceHolderContainer from '../ui/PlaceHolderContainer'
+
 
 import ErrorComp from '../ui/ErrorComp'
 import { randomValue } from '../../GenerateCartCode'
