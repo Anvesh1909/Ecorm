@@ -1,5 +1,5 @@
 import React from 'react'
-import UserInfo from './UserInfo.jsx'
+import UserInfo from './UserInfo';
 import OrderHistoryItemContainer from './OrderHistoryItemContainer'
 
 import api from '../../api'
