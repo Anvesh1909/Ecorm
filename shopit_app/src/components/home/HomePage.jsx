@@ -44,11 +44,10 @@ const HomePage = () => {
 			{/* { loading &&  <PlaceHolderContainer /> }
 			<CardContainer products={products} /> */}
 			{/* { loading ? <PlaceHolderContainer /> : <CardContainer products={products} /> } */}
-
-			{ error && <ErrorComp error={error} /> } 
-			{loading && <PlaceHolderContainer />}
-			{ loading || error!="" || <CardContainer products={products} /> }
- 
+			{loading && <PlaceHolderContainer />}	
+			{error && <ErrorComp error={error} />}
+			{!loading && !error && <CardContainer products={products} />}
+		
 		</>
 	)	
 }
