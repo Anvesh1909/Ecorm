@@ -2,15 +2,24 @@
 # exit on error
 set -o errexit
 
-# Install python dependencies
+echo "Installing dependencies..."
 pip install -r requirements.txt
 
-# Navigate to the Django project directory
+echo "Navigating to Django project directory..."
 cd shopit
 
-# Run migrations
-python manage.py makemigrations
+echo "Making migrations for core app..."
+python manage.py makemigrations core
+
+echo "Making migrations for shop_app..."
+python manage.py makemigrations shop_app
+
+echo "Running migrations..."
+python manage.py migrate core
+python manage.py migrate shop_app
 python manage.py migrate
 
-# Collect static files
-python manage.py collectstatic --no-input 
+echo "Collecting static files..."
+python manage.py collectstatic --no-input
+
+echo "Build completed!" 
