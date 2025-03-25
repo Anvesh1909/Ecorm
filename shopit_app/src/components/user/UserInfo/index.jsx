@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './UserInfo.module.css';
-import pic from '../../assets/searchLogo.png';
+// import pic from '../../assets/searchLogo.png';
+import pic from '../../../assets/searchLogo.png'
 
 
 const UserInfo = ({userInfo}) => {
