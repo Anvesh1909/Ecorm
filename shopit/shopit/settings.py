@@ -25,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2v$%t*%$uy(_l58l@de68)*f8dr939^dwrw!gv)h9y=3bk1l0f'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-2v$%t*%$uy(_l58l@de68)*f8dr939^dwrw!gv)h9y=3bk1l0f')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['ecorm.onrender.com','127.0.0.1:8000']
+ALLOWED_HOSTS = ['ecorm.onrender.com','127.0.0.1']
 
 
 # Application definition
@@ -94,12 +94,20 @@ WSGI_APPLICATION = 'shopit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # DATABASES = {
 #     'default': {
@@ -154,8 +162,11 @@ MEDIA_URL = 'img/'
 MEDIA_ROOT = BASE_DIR/"media"
 
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
  
