@@ -17,5 +17,9 @@ export default defineConfig({
         manualChunks: undefined
       }
     }
+  },
+  base: '/',
+  server: {
+    historyApiFallback: true
   }
 })
