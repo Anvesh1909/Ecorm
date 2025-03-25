@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-2v$%t*%$uy(_l58l@de68)*f8dr939^dwrw!gv)h9y=3bk1l0f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ecorm.onrender.com']
+ALLOWED_HOSTS = ['ecorm.onrender.com','127.0.0.1:8000']
 
 
 # Application definition
@@ -153,12 +153,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = 'img/'
 MEDIA_ROOT = BASE_DIR/"media"
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
- 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
