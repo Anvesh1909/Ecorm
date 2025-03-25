@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-2v$%t*%$uy(_l58l@de68)*f8d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['ecorm.onrender.com','127.0.0.1']
+ALLOWED_HOSTS = ['ecorm.onrender.com','127.0.0.1','localhost']
 
 
 # Application definition
@@ -68,6 +68,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    'https://www.ecormwebsite.onrender.com'
 ]
 
 ROOT_URLCONF = 'shopit.urls'
