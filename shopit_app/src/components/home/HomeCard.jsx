@@ -10,7 +10,7 @@ const HomeCard = ({ product }) => {
         <div className={styles.card}>
           <div className={styles.cardImgWrapper}>
             <img
-              src={`${BASE_URL}${product.image}`}
+              src={`${BASE_URL}/img/${product.image}`}
               className={styles.cardImgTop}
               alt="Card Image"
             />

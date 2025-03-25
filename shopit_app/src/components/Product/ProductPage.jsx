@@ -77,7 +77,7 @@ const ProductPage = ({setNumberCartItems}) => {
                                   <img 
                                       className="w-100 h-100" 
                                       style={{ objectFit: 'cover' }}
-                                      src={`${BASE_URL}${product.image}` || "oskdjc"} 
+                                      src={`${BASE_URL}/img/${product.image}` || "oskdjc"} 
                                       alt={product?.name || "Product"} 
                                   />
                               </div>
