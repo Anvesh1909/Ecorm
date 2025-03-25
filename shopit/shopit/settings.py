@@ -94,18 +94,10 @@ WSGI_APPLICATION = 'shopit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Ensure the database directory exists and is writable
-SQLITE_DB_DIR = BASE_DIR / 'db'
-SQLITE_DB_PATH = SQLITE_DB_DIR / 'db.sqlite3'
-
-# Create database directory if it doesn't exist
-if not SQLITE_DB_DIR.exists():
-    SQLITE_DB_DIR.mkdir(parents=True, exist_ok=True)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': SQLITE_DB_PATH,
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
