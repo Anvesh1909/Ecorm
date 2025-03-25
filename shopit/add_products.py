@@ -35,13 +35,7 @@ products = [
 for name, price, category, description in products:
     image_path = os.path.join(media_path, f"{name.lower().replace(' ', '_')}.jpg")
 
-    product = Product(
-        name=name,
-        price=price,
-        category=category,
-        description=description,
-        slug=slugify(name)
-    )
+    product = Product(name=name,price=price,category=category,description=description,slug=slugify(name))
 
     # Attach image if available
     if os.path.exists(image_path):
