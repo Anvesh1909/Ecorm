@@ -68,7 +68,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    'https://www.ecormwebsite.onrender.com'
+    "https://ecormwebsite.onrender.com/"
 ]
 
 ROOT_URLCONF = 'shopit.urls'
