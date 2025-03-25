@@ -1,0 +1,6 @@
+{
+  "root": "shopit_app/dist",
+  "routes": {
+    "/**": "index.html"
+  }
+} 

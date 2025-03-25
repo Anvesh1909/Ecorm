@@ -12,6 +12,8 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
         manualChunks: undefined
@@ -20,6 +22,7 @@ export default defineConfig({
   },
   base: '/',
   server: {
-    historyApiFallback: true
+    historyApiFallback: true,
+    port: 3000
   }
 })
