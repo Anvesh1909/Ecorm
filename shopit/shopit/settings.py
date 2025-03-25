@@ -15,6 +15,8 @@ from pathlib import Path
 import os   
 from dotenv import load_dotenv
 
+import dj_database_url
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -95,12 +97,17 @@ WSGI_APPLICATION = 'shopit.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(default="postgresql://anvesh:TaQdbbKZqP8oAss2w5wgWm5I101hz6Qu@dpg-cvh7n6aj1k6c738sml0g-a.oregon-postgres.render.com/shopit_db_3h1l")
 }
+
 
 # DATABASES = {
 #     'default': {
