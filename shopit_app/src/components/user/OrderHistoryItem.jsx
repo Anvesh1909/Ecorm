@@ -10,7 +10,7 @@ const OrderHistoryItem = ({item}) => {
       <div className="row align-items-center">
         <div className="col-md-2">
           <img
-            src={`${BASE_URL}/img/${item.product.image}`}
+            src={`${(BASE_URL || "").replace(/\/$/, '')}/${(product?.image || "default.jpg").replace(/^\//, '')}`} 
             alt="OrderItem"
             className="img-fluid rounded-3"
             style={{ borderRadius: '10px' }}
