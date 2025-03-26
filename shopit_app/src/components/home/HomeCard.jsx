@@ -9,11 +9,12 @@ const HomeCard = ({ product }) => {
       <Link to={`/products/${product.slug}`} className={styles.link}>
         <div className={styles.card}>
           <div className={styles.cardImgWrapper}>
-            <img
-              src={`${BASE_URL}/img/${product.image}`}
-              className={styles.cardImgTop}
-              alt="Card Image"
-            />
+          <img
+            src={`${BASE_URL}/${product.image}`}  // Remove extra "/img/"
+            className={styles.cardImgTop}
+            alt="Card Image"
+          />
+
           </div>
           <div className={styles.cardBody}>
             <h5 className={`${styles.cardTitle} mb-1`}>{product.name}</h5>
