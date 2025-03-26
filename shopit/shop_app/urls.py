@@ -19,6 +19,7 @@ urlpatterns = [
     path('get_user_info',views.get_user_info,name='get_user_info'),
     path('initiate-payment/', views.initiate_payment, name='initiate-payment'),
     path('payment-callback/', views.payment_callback, name='payment-callback'),
+    path('register/', views.register, name='register'),
 ]
 
 

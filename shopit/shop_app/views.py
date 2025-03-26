@@ -7,6 +7,8 @@ from shop_app.serializers import CartItemSerializer, DetailsProductSerializer, P
 from shop_app.models import Product,Cart,CartItem,Transaction
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
 
 import uuid
 from decimal import Decimal
@@ -308,5 +310,57 @@ def payment_callback(request):
             'error': 'Payment callback processing failed',
             'details': str(e)
         }, status=400)
+
+@api_view(['POST'])
+def register(request):
+    try:
+        data = request.data
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        phone = data.get('phone')
+        city = data.get('city')
+        state = data.get('state')
+
+        if not all([username, email, password]):
+            return Response({'error': 'Please provide all required fields'}, status=400)
+
+        if get_user_model().objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=400)
+
+        if get_user_model().objects.filter(email=email).exists():
+            return Response({'error': 'Email already exists'}, status=400)
+
+        try:
+            validate_password(password)
+        except Exception as e:
+            return Response({'error': str(e)}, status=400)
+
+        user = get_user_model().objects.create(
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            phone=phone,
+            city=city,
+            state=state
+        )
+        user.set_password(password)
+        user.save()
+
+        return Response({
+            'message': 'User registered successfully',
+            'user': {
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            }
+        }, status=201)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=400)
 
         
