@@ -9,9 +9,11 @@ const HomeCard = ({ product }) => {
       <Link to={`/products/${product.slug}`} className={styles.link}>
         <div className={styles.card}>
           <div className={styles.cardImgWrapper}>
-          <img src={`${BASE_URL.replace(/\/$/, '')}/${product.image.replace(/^\//, '')}`} 
-     className={styles.cardImgTop} 
-     alt="Card Image" />
+          <img 
+            src={`${(BASE_URL || "").replace(/\/$/, '')}/${(product?.image || "default.jpg").replace(/^\//, '')}`} 
+            className={styles.cardImgTop} 
+            alt={product?.name || "Product Image"} 
+          />
 
 
           </div>
