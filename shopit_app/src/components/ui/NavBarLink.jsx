@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 
 const NavBarLink = () => {
-    const { isAuthorised, username, handleAuth, setIsAuthorised, setUsername, handleLogout } = useContext(AuthContext);
+    const { isAuthorised, username, handleLogout } = useContext(AuthContext);
 
   
 
@@ -54,6 +54,15 @@ const NavBarLink = () => {
                     </li>
                 </>
             )}
+
+            <li className="nav-item">
+                <NavLink 
+                    to="/" 
+                    className={({ isActive }) => isActive ? 'nav-link active fw-semibold' : 'nav-link fw-semibold'}
+                >
+                    Home
+                </NavLink>
+            </li>
         </ul>
     );
 };

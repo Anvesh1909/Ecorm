@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import api from '../../api'
 import AuthContext from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
 
@@ -15,6 +16,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
 
     function handleSubmit(e) {
         e.preventDefault()
@@ -31,6 +33,7 @@ const LoginPage = () => {
             getUsername();
 
             handleAuth();
+            toast.success('Login successful!');
             if(location.state){
                 navigate(location.state.from.pathname,{replace: true})
             } else {
@@ -40,6 +43,7 @@ const LoginPage = () => {
         .catch(error => {
             console.log(error)
             setError(error.response.data.detail);
+            toast.error(error.response.data.detail || 'Login failed');
         })
         .finally(() => {
             setLoading(false)
@@ -54,6 +58,12 @@ const LoginPage = () => {
             <div className="card-body p-5">
               <h2 className="text-center mb-4">Login</h2>
               
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="username" className="form-label">Username</label>
@@ -65,29 +75,53 @@ const LoginPage = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     autoComplete="username"
+                    disabled={loading}
                   />
                 </div>
 
                 <div className="mb-3">
                   <label htmlFor="password" className="form-label">Password</label>
-                  <input 
-                    type="password" 
-                    className="form-control" 
-                    id="password" 
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="current-password"
-                  />
+                  <div className="input-group">
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      className="form-control" 
+                      id="password" 
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      autoComplete="current-password"
+                      disabled={loading}
+                    />
+                    <button 
+                      type="button" 
+                      className="btn btn-outline-secondary" 
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mb-3 form-check">
-                  <input type="checkbox" className="form-check-input" id="rememberMe" />
+                  <input type="checkbox" className="form-check-input" id="rememberMe" disabled={loading} />
                   <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                 </div>
 
                 <div className="d-grid">
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button 
+                      type="submit" 
+                      className="btn btn-primary"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          Logging in...
+                        </>
+                      ) : (
+                        'Login'
+                      )}
+                    </button>
                 </div>
 
                 <div className="text-center mt-3">

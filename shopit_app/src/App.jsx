@@ -13,10 +13,8 @@ import LoginPage from './components/user/LoginPage';
 import RegisterPage from './components/user/RegisterPage';
 import ProtectedRoute from './components/ui/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
 import UserProfilePage from './components/user/UserProfilePage';
 import PaymentStatus from './components/checkout/PaymentStatus';
-import './styles/theme.module.css';
 
 const App = () => {
   const [numCartItems, setNumberCartItems] = useState(0);
@@ -36,41 +34,39 @@ const App = () => {
   },[])
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<MainLayout numCartItems={numCartItems} />}>
-              <Route index element={<HomePage />} />
-              <Route path='products/:slug' element={<ProductPage setNumberCartItems={setNumberCartItems} />}/>  
-              <Route path='cart' element={<CartPage />} />
-              <Route path='checkout' element={
-                <ProtectedRoute>
-                  <CheckoutPage />
-                </ProtectedRoute>} />
-              <Route path='login' element={<LoginPage />} />
-              <Route path='register' element={<RegisterPage />} />
-              <Route path='profile' element={<UserProfilePage />} />
-              <Route path='payment-status' element={<PaymentStatus />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Route>
-          </Routes>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<MainLayout numCartItems={numCartItems} />}>
+            <Route index element={<HomePage />} />
+            <Route path='products/:slug' element={<ProductPage setNumberCartItems={setNumberCartItems} />}/>  
+            <Route path='cart' element={<CartPage />} />
+            <Route path='checkout' element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>} />
+            <Route path='login' element={<LoginPage />} />
+            <Route path='register' element={<RegisterPage />} />
+            <Route path='profile' element={<UserProfilePage />} />
+            <Route path='payment-status' element={<PaymentStatus />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Route>
+        </Routes>
 
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-        </BrowserRouter>
-      </AuthProvider>
-    </ThemeProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

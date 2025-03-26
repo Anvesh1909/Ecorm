@@ -7,6 +7,8 @@ const RegisterPage = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -22,10 +24,20 @@ const RegisterPage = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
+    if (name === 'phone') {
+      // Only allow numbers
+      if (value === '' || /^\d+$/.test(value)) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
+        }))
+      }
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }))
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -35,12 +47,14 @@ const RegisterPage = () => {
 
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match')
+      toast.error('Passwords do not match')
       setLoading(false)
       return
     }
 
     if (!formData.terms) {
       setError('Please agree to the Terms of Service')
+      toast.error('Please agree to the Terms of Service')
       setLoading(false)
       return
     }
@@ -60,7 +74,9 @@ const RegisterPage = () => {
       toast.success('Registration successful! Please login.')
       navigate('/login')
     } catch (error) {
-      setError(error.response?.data?.error || 'Registration failed. Please try again.')
+      const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.'
+      setError(errorMessage)
+      toast.error(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -69,7 +85,7 @@ const RegisterPage = () => {
   return (
     <div className="container">
       <div className="row justify-content-center align-items-center min-vh-100">
-        <div className="col-md-6 col-lg-4">
+        <div className="col-md-8 col-lg-6">
           <div className="card shadow">
             <div className="card-body p-5">
               <h2 className="text-center mb-4">Register</h2>
@@ -81,127 +97,157 @@ const RegisterPage = () => {
               )}
 
               <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label htmlFor="first_name" className="form-label">First Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="first_name" 
-                    name="first_name"
-                    placeholder="Enter your first name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label htmlFor="first_name" className="form-label">First Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="first_name" 
+                      name="first_name"
+                      placeholder="Enter your first name"
+                      value={formData.first_name}
+                      onChange={handleChange}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor="last_name" className="form-label">Last Name</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="last_name" 
+                      name="last_name"
+                      placeholder="Enter your last name"
+                      value={formData.last_name}
+                      onChange={handleChange}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="last_name" className="form-label">Last Name</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="last_name" 
-                    name="last_name"
-                    placeholder="Enter your last name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label htmlFor="username" className="form-label">Username</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="username" 
+                      name="username"
+                      placeholder="Choose a username"
+                      value={formData.username}
+                      onChange={handleChange}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor="email" className="form-label">Email address</label>
+                    <input 
+                      type="email" 
+                      className="form-control" 
+                      id="email" 
+                      name="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="username" className="form-label">Username</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="username" 
-                    name="username"
-                    placeholder="Choose a username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-4">
+                    <label htmlFor="phone" className="form-label">Phone Number</label>
+                    <input 
+                      type="tel" 
+                      className="form-control" 
+                      id="phone" 
+                      name="phone"
+                      placeholder="Enter your phone number"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label htmlFor="city" className="form-label">City</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="city" 
+                      name="city"
+                      placeholder="Enter your city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label htmlFor="state" className="form-label">State</label>
+                    <input 
+                      type="text" 
+                      className="form-control" 
+                      id="state" 
+                      name="state"
+                      placeholder="Enter your state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      disabled={loading}
+                    />
+                  </div>
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Email address</label>
-                  <input 
-                    type="email" 
-                    className="form-control" 
-                    id="email" 
-                    name="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="phone" className="form-label">Phone Number</label>
-                  <input 
-                    type="tel" 
-                    className="form-control" 
-                    id="phone" 
-                    name="phone"
-                    placeholder="Enter your phone number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="city" className="form-label">City</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="city" 
-                    name="city"
-                    placeholder="Enter your city"
-                    value={formData.city}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="state" className="form-label">State</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="state" 
-                    name="state"
-                    placeholder="Enter your state"
-                    value={formData.state}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">Password</label>
-                  <input 
-                    type="password" 
-                    className="form-control" 
-                    id="password" 
-                    name="password"
-                    placeholder="Create a password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
-                  <input 
-                    type="password" 
-                    className="form-control" 
-                    id="confirmPassword" 
-                    name="confirmPassword"
-                    placeholder="Confirm your password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                  />
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <div className="input-group">
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        className="form-control" 
+                        id="password" 
+                        name="password"
+                        placeholder="Create a password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        disabled={loading}
+                      />
+                      <button 
+                        type="button" 
+                        className="btn btn-outline-secondary" 
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                    <div className="input-group">
+                      <input 
+                        type={showConfirmPassword ? "text" : "password"} 
+                        className="form-control" 
+                        id="confirmPassword" 
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        required
+                        disabled={loading}
+                      />
+                      <button 
+                        type="button" 
+                        className="btn btn-outline-secondary" 
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
+                        {showConfirmPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="mb-3 form-check">
@@ -212,6 +258,7 @@ const RegisterPage = () => {
                     name="terms"
                     checked={formData.terms}
                     onChange={handleChange}
+                    disabled={loading}
                   />
                   <label className="form-check-label" htmlFor="terms">
                     I agree to the <Link to="/terms" className="text-decoration-none">Terms of Service</Link>
@@ -224,7 +271,14 @@ const RegisterPage = () => {
                     className="btn btn-primary"
                     disabled={loading}
                   >
-                    {loading ? 'Registering...' : 'Register'}
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Registering...
+                      </>
+                    ) : (
+                      'Register'
+                    )}
                   </button>
                 </div>
 
